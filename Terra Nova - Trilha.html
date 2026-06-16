@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trilha de Aprendizagem · Terra Nova · ServiceNow</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0D1018;
+  --surface: #13161F;
+  --surface2: #1A1E2C;
+  --border: #252A3D;
+  --border-hover: #3A4060;
+  --csm: #3AABF5;
+  --csm-dim: rgba(58,171,245,0.1);
+  --fsm: #25D4AD;
+  --fsm-dim: rgba(37,212,173,0.1);
+  --itsm: #B49BFF;
+  --itsm-dim: rgba(180,155,255,0.1);
+  --accent: #F5A623;
+  --accent-dim: rgba(245,166,35,0.1);
+  --text: #E9EDF8;
+  --text2: #A0A8C0;
+  --muted: #5C637A;
+  --green: #3DD68C;
+  --red: #FF6B6B;
+  --radius: 12px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  min-height: 100vh;
+}
+
+.hero {
+  background: linear-gradient(160deg, #0D1018 0%, #111828 60%, #0D1018 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 48px 32px 36px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -80px;
+  width: 320px; height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(58,171,245,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-inner { max-width: 960px; margin: 0 auto; }
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--accent-dim);
+  border: 1px solid rgba(245,166,35,0.25);
+  border-radius: 100px;
+  padding: 4px 12px 4px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.hero-badge span { width:6px; height:6px; border-radius:50%; background:var(--accent); }
+
+h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.hero-sub {
+  color: var(--text2);
+  font-size: 15px;
+  line-height: 1.7;
+  max-width: 560px;
+  margin-bottom: 28px;
+}
+
+.hero-stats { display: flex; gap: 28px; flex-wrap: wrap; }
+
+.stat { display: flex; flex-direction: column; gap: 2px; }
+.stat-num { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: var(--text); }
+.stat-label { font-size: 12px; color: var(--muted); }
+
+.controls { max-width: 960px; margin: 0 auto; padding: 24px 32px 0; }
+
+.section-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.profile-group { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+
+.profile-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 100px;
+  border: 1.5px solid var(--border);
+  background: transparent;
+  color: var(--text2);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.profile-btn:hover { border-color: var(--border-hover); color: var(--text); }
+.profile-btn.active-sala { border-color: var(--csm); color: var(--csm); background: var(--csm-dim); }
+.profile-btn.active-gestores { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+.profile-btn.active-all { border-color: var(--text2); color: var(--text); background: rgba(255,255,255,0.04); }
+.profile-icon { font-size: 16px; }
+
+.filter-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+
+.filter-btn {
+  padding: 5px 14px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.18s;
+  font-family: 'Inter', sans-serif;
+}
+
+.filter-btn:hover { color: var(--text2); border-color: var(--border-hover); }
+.filter-btn.on-csm { border-color: var(--csm); color: var(--csm); background: var(--csm-dim); }
+.filter-btn.on-fsm { border-color: var(--fsm); color: var(--fsm); background: var(--fsm-dim); }
+.filter-btn.on-itsm { border-color: var(--itsm); color: var(--itsm); background: var(--itsm-dim); }
+
+.trail { max-width: 960px; margin: 0 auto; padding: 28px 32px 60px; }
+
+.phase { margin-bottom: 40px; }
+
+.phase-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+
+.phase-pip {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px; font-weight: 700;
+  flex-shrink: 0;
+}
+
+.phase-info { flex: 1; }
+.phase-title { font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 600; color: var(--text); }
+.phase-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+.phase-badge {
+  font-size: 11px; color: var(--muted);
+  background: var(--surface2); border: 1px solid var(--border);
+  padding: 4px 10px; border-radius: 100px;
+}
+
+.phase-divider {
+  height: 1px;
+  background: linear-gradient(to right, var(--border) 0%, transparent 80%);
+  margin-bottom: 16px;
+}
+
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 12px; }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+  display: flex; flex-direction: column; gap: 12px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+
+.card::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 3px; height: 100%;
+  border-radius: var(--radius) 0 0 var(--radius);
+}
+
+.card.csm::before { background: var(--csm); }
+.card.fsm::before { background: var(--fsm); }
+.card.itsm::before { background: var(--itsm); }
+.card.mixed::before { background: var(--accent); }
+
+.card:hover { border-color: var(--border-hover); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+
+.card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+
+.card-tag {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 3px 8px; border-radius: 4px;
+}
+
+.tag-csm { background: var(--csm-dim); color: var(--csm); }
+.tag-fsm { background: var(--fsm-dim); color: var(--fsm); }
+.tag-itsm { background: var(--itsm-dim); color: var(--itsm); }
+.tag-mixed { background: var(--accent-dim); color: var(--accent); }
+
+.profile-dots { display: flex; gap: 4px; }
+.pdot { width: 6px; height: 6px; border-radius: 50%; opacity: 0.8; }
+
+.card-title { font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.35; }
+.card-desc { font-size: 12px; color: var(--text2); line-height: 1.65; }
+
+.card-items { list-style: none; display: flex; flex-direction: column; gap: 5px; flex: 1; }
+.card-items li { font-size: 12px; color: var(--text2); padding-left: 14px; position: relative; line-height: 1.5; }
+.card-items li::before { content: '›'; position: absolute; left: 0; color: var(--muted); }
+
+.card-footer { border-top: 1px solid var(--border); padding-top: 12px; display: flex; align-items: center; gap: 8px; }
+
+.course-link {
+  display: flex; align-items: center; gap: 6px;
+  flex: 1; padding: 7px 12px;
+  border-radius: 8px; border: 1px solid var(--border);
+  background: var(--surface2); color: var(--text2);
+  font-size: 12px; font-weight: 500;
+  text-decoration: none; transition: all 0.18s;
+  overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+  font-family: 'Inter', sans-serif;
+}
+
+.course-link:hover { border-color: var(--border-hover); color: var(--text); }
+
+.course-link.has-url {
+  color: var(--text); border-color: var(--border-hover);
+}
+
+.course-link.has-url:hover { background: rgba(255,255,255,0.04); }
+
+.cost-badge { padding: 5px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+.cost-free { background: rgba(61,214,140,0.12); color: var(--green); border: 1px solid rgba(61,214,140,0.2); }
+.cost-paid { background: rgba(255,107,107,0.1); color: var(--red); border: 1px solid rgba(255,107,107,0.2); }
+
+.cert-link {
+  display: flex; align-items: center; gap: 6px;
+  flex: 1; padding: 6px 12px; border-radius: 8px;
+  border: 1px solid rgba(245,166,35,0.3);
+  background: rgba(245,166,35,0.06);
+  color: var(--accent); font-size: 11px; font-weight: 600;
+  text-decoration: none; transition: all 0.18s;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font-family: 'Inter', sans-serif;
+}
+.cert-link:hover { background: rgba(245,166,35,0.13); border-color: var(--accent); }
+
+.phase-connector { display: flex; justify-content: center; margin: -28px 0 8px; }
+.phase-connector-line { width: 1.5px; height: 28px; background: linear-gradient(to bottom, var(--border), transparent); }
+
+.legend {
+  border-top: 1px solid var(--border); padding: 20px 32px;
+  max-width: 960px; margin: 0 auto;
+  display: flex; gap: 20px; flex-wrap: wrap; align-items: center;
+}
+
+.legend-title { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-right: 4px; }
+.legend-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text2); }
+.ldot { width: 9px; height: 9px; border-radius: 50%; }
+
+.source-note {
+  max-width: 960px; margin: 0 auto;
+  padding: 12px 32px 0;
+  font-size: 11px; color: var(--muted);
+  font-style: italic;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+@media (max-width: 600px) {
+  .hero { padding: 32px 20px 28px; }
+  .controls, .trail { padding-left: 20px; padding-right: 20px; }
+  h1 { font-size: 24px; }
+  .cards { grid-template-columns: 1fr; }
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  background: #0F1F4E;
+  border-bottom: 3px solid #F5A623;
+  padding: 0 32px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.topbar-logo-tn {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: 0.06em;
+}
+.topbar-logo-tn span { color: #FFFFFF; }
+.topbar-logo-edx {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: 0.1em;
+}
+.edx-dot { color: #FFFFFF; }
+
+
+/* ── HERO BTN ── */
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 28px;
+  border-radius: 8px;
+  border: none;
+  background: #0F1F4E;
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.22s;
+  font-family: 'Space Grotesk', sans-serif;
+  margin-top: 24px;
+  text-decoration: none;
+  box-shadow: 0 0 0 2px #F5A623, 0 4px 16px rgba(15,31,78,0.4);
+  letter-spacing: 0.02em;
+  position: relative;
+  overflow: hidden;
+}
+.hero-btn::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%; height: 3px;
+  background: #F5A623;
+}
+.hero-btn:hover {
+  background: #162966;
+  box-shadow: 0 0 0 2px #F5A623, 0 6px 24px rgba(15,31,78,0.6);
+  transform: translateY(-1px);
+  color: #FFFFFF;
+}
+.hero-btn-icon {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: #F5A623;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-logo-tn">TERRAN<span>O</span>V<span>A</span></div>
+  <div class="topbar-logo-edx"><span class="edx-dot">e</span>:<span class="edx-dot">D</span>x</div>
+</div>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge"><span></span> Terra Nova · ServiceNow</div>
+    <h1>Trilha de Aprendizagem</h1>
+    <p class="hero-sub">Capacitação estruturada em CSM, FSM e ITSM para a Sala de Controle, Coordenadores e Gestores da Terra Nova.</p>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num">5</span><span class="stat-label">Produtos</span></div>
+      <div class="stat"></div>
+      <div class="stat"><span class="stat-num">8</span><span class="stat-label">Módulos</span></div>
+      <div class="stat"><span class="stat-num">3</span><span class="stat-label">Produtos</span></div>
+    </div>
+
+    <a class="hero-btn" href="https://signon.servicenow.com/x_snc_sso_auth.do?pageId=login" target="_blank" rel="noopener">
+      <span class="hero-btn-icon">🎓</span>
+      Criar conta no ServiceNow University
+    </a>
+  </div>
+</div>
+
+<p class="source-note">Cursos vinculados ao ServiceNow University (learning.servicenow.com).</p>
+
+<div class="controls">
+  <div class="section-label">Filtrar por perfil</div>
+  <div class="profile-group">
+    <button class="profile-btn active-all" onclick="setProfile('all', this)">
+      <span class="profile-icon">👥</span> Todos os perfis
+    </button>
+    <button class="profile-btn" onclick="setProfile('sala', this)">
+      <span class="profile-icon">🖥️</span> Sala de Controle / N1
+    </button>
+    <button class="profile-btn" onclick="setProfile('gestores', this)">
+      <span class="profile-icon">📋</span> Coordenadores / Gestores
+    </button>
+  </div>
+
+  <div class="section-label">Filtrar por produto</div>
+  <div class="filter-row">
+    <button class="filter-btn" data-prod="csm" onclick="toggleProd('csm', this)">CSM</button>
+    <button class="filter-btn" data-prod="fsm" onclick="toggleProd('fsm', this)">FSM</button>
+    <button class="filter-btn" data-prod="itsm" onclick="toggleProd('itsm', this)">ITSM</button>
+  </div>
+</div>
+
+<div class="trail" id="trail"></div>
+
+<div class="legend">
+  <span class="legend-title">Produtos:</span>
+  <div class="legend-item"><div class="ldot" style="background:#3AABF5"></div> CSM</div>
+  <div class="legend-item"><div class="ldot" style="background:#25D4AD"></div> FSM</div>
+  <div class="legend-item"><div class="ldot" style="background:#B49BFF"></div> ITSM</div>
+  <div class="legend-item"><div class="ldot" style="background:#F5A623"></div> Múltiplos</div>
+  <span style="margin-left:auto"></span>
+  <div class="legend-item"><div class="ldot" style="background:#3DD68C"></div> Gratuito</div>
+  <div class="legend-item"><div class="ldot" style="background:#FF6B6B"></div> Pago</div>
+</div>
+
+<script>
+const phases = [
+  {
+    num: "🖥️",
+    title: "Plataforma",
+    sub: "Base para todos os perfis: entendendo o ServiceNow antes de tudo",
+    color: "#F5A623",
+    cards: [
+      {
+        id: "c01", prod: "mixed", profiles: ["sala","gestores"],
+        tagClass: "tag-mixed", tagLabel: "Plataforma",
+        title: "Welcome to ServiceNow",
+        desc: "Para quem nunca abriu o ServiceNow antes. Curso oficial gratuito que cobre as 7 áreas principais da plataforma em 2 a 4 horas.",
+        items: ["Next Experience: navegação, acesso e interface da plataforma","Lists, Filters e Forms: trabalhando com listas e formulários","Tasks e Platform Analytics: tarefas e visibilidade operacional","Service Catalog, Knowledge Management e Virtual Agent"],
+        cost: "free",
+        url: "https://learning.servicenow.com/lxp/en/now-platform/welcome-to-servicenow?id=learning_course_prev&course_id=386f3cf847b36a90c00af235126d430c",
+        urlCert: "https://learning.servicenow.com/lxp/en/servicenow-ai-platform/micro-certification-welcome-to-servicenow-zurich?id=learning_course_prev&course_id=93d2c32497b47290e7b47b70f053afc4"
+      }
+    ]
+  },
+  {
+    num: "🔧",
+    title: "ITSM",
+    sub: "IT Service Management: incidentes, mudanças, conhecimento e workspace operacional",
+    color: "#B49BFF",
+    cards: [
+      {
+        id: "c02", prod: "itsm", profiles: ["sala","gestores"],
+        tagClass: "tag-itsm", tagLabel: "ITSM",
+        title: "ITSM Fundamentals On Demand",
+        desc: "Curso oficial de fundamentos ITSM no ritmo do aluno, cobrindo o ciclo de vida completo de incidentes, requisições, problemas e mudanças.",
+        items: ["Introdução às aplicações ITSM e seus processos","Operate IT Services: incidentes, requisições e catálogo","Maintain IT Services: problemas, mudanças e CMDB","Improve IT Services: melhoria contínua e performance"],
+        cost: "free",
+        url: "https://learning.servicenow.com/lxp/en/it-service-management/it-service-management-itsm-fundamentals-on-demand?id=learning_course_prev&course_id=94029ca79335ba54f2d9bc686cba1046",
+        urlSim: "https://learning.servicenow.com/lxp/en/it-service-management/it-service-management-itsm-fundamentals-simulator?id=learning_course_prev&course_id=f1912f5b471d7a10c2f2090fe16d439f"
+      },
+      {
+        id: "c04", prod: "itsm", profiles: ["sala","gestores"],
+        tagClass: "tag-itsm", tagLabel: "ITSM",
+        title: "Service Operations Workspace (SOW) Essentials - Zurich",
+        desc: "Curso ideal para a Sala de Controle: cobre o ambiente de trabalho onde incidentes, requisições e mudanças são gerenciados no dia a dia, com foco em visibilidade, escalação e colaboração.",
+        items: ["Listas, formulários e páginas de registro na SOW","Ciclo completo de incidentes, requests e changes na workspace","Agendamento de plantão e políticas de escalação","Dashboards e relatórios para identificar gargalos operacionais"],
+        cost: "free",
+        url: "https://learning.servicenow.com/lxp/en/it-service-management/service-operations-workspace-sow-essentials?id=learning_course_prev&course_id=ece6fa1547d27690850ec705f16d43b2"
+      },
+      {
+        id: "c11", prod: "itsm", profiles: ["sala","gestores"],
+        tagClass: "tag-itsm", tagLabel: "ITSM",
+        title: "Knowledge Management Overview",
+        desc: "Visão geral da gestão do conhecimento na plataforma: como localizar, criar e gerenciar artigos KB ao longo do ciclo de vida, reduzindo retrabalho e evitando abertura desnecessária de chamados.",
+        items: ["Overview: conceitos e ciclo de vida do Knowledge Management","Use Knowledge: como localizar e usar artigos KB no dia a dia","Create and Manage Knowledge: criar, revisar e publicar artigos"],
+        cost: "free",
+        url: "https://learning.servicenow.com/lxp/en/knowledge-management-overview?id=learning_course_prev&course_id=9b99ae3647998f9476e07884f16d43c9"
+      },
+      {
+        id: "c12", prod: "itsm", profiles: ["sala","gestores"],
+        tagClass: "tag-itsm", tagLabel: "ITSM",
+        title: "Change Management Overview",
+        desc: "Curso focado no fulfiller: navegar pelo módulo de mudanças, entender os tipos de change e acompanhar o ciclo completo de criação até fechamento.",
+        items: ["Overview: conceitos e tipos de mudança (Normal, Padrão, Emergencial)","Creation and Scope: criando e definindo o escopo da mudança","Approval e CAB: processo de aprovação e Change Advisory Board","Implementation, Review and Closure: execução e encerramento"],
+        cost: "free",
+        url: "https://learning.servicenow.com/lxp/en/change-management-overview?id=learning_course_prev&course_id=bdb3f6bac3ddcb94c6009313e40131dc"
+      }
+    ]
+  },
+  {
+    num: "🤝",
+    title: "CSM",
+    sub: "Customer Service Management: atendimento, casos e engrenagem do produto",
+    color: "#3AABF5",
+    cards: [
+      {
+        id: "c03", prod: "csm", profiles: ["gestores"],
+        tagClass: "tag-csm", tagLabel: "CSM",
+        title: "CSM Essentials On Demand",
+        desc: "Curso aprofundado do CSM para administradores, analistas de processo e coordenadores técnicos. Cobre a configuração e operação completa do produto em 22 horas de conteúdo prático, incluindo o blueprint da certificação oficial CIS-CSM.",
+        items: ["Configuração e administração do produto CSM","Gestão de casos, filas, escalações e regras de atribuição","Customer Service Management Workspace e Service Portal","Preparação para a certificação CIS-CSM (blueprint incluído)"],
+        cost: "free",
+        url: "https://learning.servicenow.com/lxp/en/customer-service-management/customer-service-management-essentials-on?id=learning_course_prev&course_id=7da4ae119389f6103cc0322d6cba109e"
+      }
+    ]
+  },
+  {
+    num: "🔩",
+    title: "FSM",
+    sub: "Field Service Management: ordens de serviço, técnicos em campo e despacho",
+    color: "#25D4AD",
+    cards: [
+      {
+        id: "c06", prod: "fsm", profiles: ["sala","gestores"],
+        tagClass: "tag-fsm", tagLabel: "FSM",
+        title: "FSM Fundamentals On Demand",
+        desc: "Curso oficial de FSM: do chamado ao técnico em campo, cobrindo Work Orders, despacho e agendamento.",
+        items: ["Introduction to FSM: conceitos e modelos de serviço em campo","Work Order Initiation e Qualification: criação e qualificação da ordem","Scheduling and Dispatch: agendamento e despacho do técnico","Delivery, Confirmation e Analyze: execução, confirmação e melhoria"],
+        cost: "free",
+        url: "https://learning.servicenow.com/lxp/en/field-service-management/field-service-management-fsm-fundamentals-on?id=learning_course_prev&course_id=ef8e060797afde50f6913ce0f053af7a"
+      }
+    ]
+  },
+  {
+    num: "📊",
+    title: "Analytics",
+    sub: "Visibilidade operacional: dashboards, KPIs e tomada de decisão com dados",
+    color: "#F5A623",
+    cards: [
+      {
+        id: "c09", prod: "mixed", profiles: ["gestores"],
+        tagClass: "tag-mixed", tagLabel: "Dashboards",
+        title: "Platform Analytics (PA) Overview",
+        desc: "Visão geral da solução de analytics do ServiceNow: KPIs, redução de gargalos e eficiência de processos.",
+        items: ["Como criar relatórios básicos no ServiceNow","Dashboards por produto: CSM, FSM e ITSM","KPIs essenciais para a operação","Identificação de gargalos com Performance Analytics"],
+        cost: "free",
+        url: "https://learning.servicenow.com/lxp/en/now-intelligence/platform-analytics-pa-overview?id=learning_course_prev&course_id=fb9decf8932f06905402393d6cba10f6"
+      }
+    ]
+  }
+];
+
+
+let activeProfile = 'all';
+let activeProds = new Set();
+
+function render() {
+  const trail = document.getElementById('trail');
+  trail.innerHTML = '';
+
+  phases.forEach((phase, pi) => {
+    const filtered = phase.cards.filter(c => {
+      const profileOk = activeProfile === 'all' || c.profiles.includes(activeProfile);
+      const prodOk = activeProds.size === 0 || activeProds.has(c.prod) || c.prod === 'mixed';
+      return profileOk && prodOk;
+    });
+
+    if (filtered.length === 0) return;
+
+    if (pi > 0) {
+      const conn = document.createElement('div');
+      conn.className = 'phase-connector';
+      conn.innerHTML = '<div class="phase-connector-line"></div>';
+      trail.appendChild(conn);
+    }
+
+    const phaseEl = document.createElement('div');
+    phaseEl.className = 'phase';
+    phaseEl.innerHTML = `
+      <div class="phase-header">
+        <div class="phase-pip" style="background:${phase.color}18;color:${phase.color}">${phase.num}</div>
+        <div class="phase-info">
+          <div class="phase-title">${phase.title}</div>
+          <div class="phase-sub">${phase.sub}</div>
+        </div>
+        <div class="phase-badge">${phase.duration}</div>
+      </div>
+      <div class="phase-divider"></div>
+      <div class="cards">
+        ${filtered.map(c => buildCard(c)).join('')}
+      </div>
+    `;
+    trail.appendChild(phaseEl);
+  });
+}
+
+function buildCard(c) {
+  const profileColors = { sala: '#3AABF5', gestores: '#F5A623' };
+  const profileLabels = { sala: 'Sala de Controle', gestores: 'Gestores' };
+  const dots = c.profiles.map(p =>
+    `<span class="pdot" style="background:${profileColors[p]}" title="${profileLabels[p]}"></span>`
+  ).join('');
+  const costClass = c.cost === 'free' ? 'cost-free' : 'cost-paid';
+  const costLabel = c.cost === 'free' ? 'Gratuito' : 'Pago';
+  const hasUrl = c.url && c.url.length > 0;
+  const linkClass = hasUrl ? 'course-link has-url' : 'course-link';
+  const linkAttr = hasUrl ? `href="${c.url}" target="_blank" rel="noopener"` : `href="#" onclick="promptUrl('${c.id}'); return false;"`;
+  const linkText = hasUrl ? '🔗 Acessar curso' : '📎 Adicionar link';
+
+  const certBtn = c.urlCert
+    ? `<a class="cert-link" href="${c.urlCert}" target="_blank" rel="noopener">🏅 Microcertificação</a>`
+    : c.urlSim
+    ? `<a class="cert-link" href="${c.urlSim}" target="_blank" rel="noopener">🎮 Simulador</a>`
+    : '';
+
+  return `
+    <div class="card ${c.prod}" id="card-${c.id}">
+      <div class="card-top">
+        <span class="card-tag ${c.tagClass}">${c.tagLabel}</span>
+        <div class="profile-dots">${dots}</div>
+      </div>
+      <div class="card-title">${c.title}</div>
+      <div class="card-desc">${c.desc}</div>
+      <ul class="card-items">
+        ${c.items.map(i => `<li>${i}</li>`).join('')}
+      </ul>
+      <div class="card-footer" style="flex-direction:column;gap:6px;">
+        <div style="display:flex;align-items:center;gap:8px;width:100%">
+          <a class="${linkClass}" id="link-${c.id}" ${linkAttr}>${linkText}</a>
+          <span class="cost-badge ${costClass}" id="cost-${c.id}">${costLabel}</span>
+        </div>
+        ${certBtn ? `<div style="display:flex;width:100%">${certBtn}</div>` : ''}
+      </div>
+    </div>
+  `;
+}
+
+function setProfile(profile, btn) {
+  activeProfile = profile;
+  document.querySelectorAll('.profile-btn').forEach(b => { b.className = 'profile-btn'; });
+  const cls = profile === 'all' ? 'active-all' : profile === 'sala' ? 'active-sala' : 'active-gestores';
+  btn.className = `profile-btn ${cls}`;
+  render();
+}
+
+function toggleProd(prod, btn) {
+  if (activeProds.has(prod)) {
+    activeProds.delete(prod);
+    btn.className = 'filter-btn';
+  } else {
+    activeProds.add(prod);
+    btn.className = `filter-btn on-${prod}`;
+  }
+  render();
+}
+
+function promptUrl(cardId) {
+  const url = window.prompt('Cole o link do curso para este módulo:');
+  if (url && url.trim()) {
+    const card = phases.flatMap(p => p.cards).find(c => c.id === cardId);
+    if (card) { card.url = url.trim(); render(); }
+  }
+}
+
+render();
+</script>
+</body>
+</html>
